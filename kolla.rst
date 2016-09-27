@@ -192,8 +192,8 @@ Deploying Kolla
     
     docker_registry: "<registry-ip:4000">
     
-    network_interface: "eth0"
-    neutron_external_interface: "eth1"
+    network_interface: "enp0s3"
+    neutron_external_interface: "enp0s8"
 
 3. Before running the deploy, check that the deployment targets are in a state where Kolla may deploy to them
 ::

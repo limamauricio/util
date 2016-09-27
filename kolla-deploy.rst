@@ -206,6 +206,15 @@ Deploying Kolla
     /tools/kolla-ansible deploy
    
 
+Useful tools
+============
+1. After successful deployment of OpenStack, run the following command can create an openrc file */etc/kolla/admin-openrc.sh* on the deploy node.
+::
+
+    /tools/kolla-ansible post-deploy
+    
+    source /etc/kolla/admin-openrc.sh
+
 Known Issues
 ============
 1. In case of deploying using the VirtualBox or vSphere make sure that *neutron_external_interface* is in promisc mode
@@ -222,3 +231,17 @@ Known Issues
     
     #Restart network
     /etc/init.d/networking restart
+
+2. In case of deploying using the _nested_ environment (eg. Using Virtualbox VM’s, KVM VM’s), if your compute node supports hardware acceleration for virtual machines.
+::
+
+    # Run the follow command in compute node
+    egrep -c '(vmx|svm)' /proc/cpuinfo
+
+If this command returns a value of **zero**, your compute node does not support hardware acceleration and you must configure libvirt to use **QEMU** instead of KVM.
+::
+
+    # Change the virt_type option in the [libvirt] section in nova.conf file inside the /etc/kolla/config/ directory.
+    
+    [libvirt]
+    virt_type=qemu

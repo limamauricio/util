@@ -205,3 +205,20 @@ Deploying Kolla
 
     /tools/kolla-ansible deploy
    
+
+Known Issues
+============
+1. In case of deploying using the VirtualBox or vSphere make sure that *neutron_external_interface* is in promisc mode
+::
+
+    #Open /etc/network/interfaces
+    vim /etc/network/interfaces
+    
+    #Add these lines:
+    auto <neutron_external_interface>
+    iface <neutron_external_interface> inet manual
+    up ifconfig <neutron_external_interface> promisc up
+    down ifconfig <neutron_external_interface> promisc down
+    
+    #Restart network
+    /etc/init.d/networking restart
